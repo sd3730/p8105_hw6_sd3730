@@ -3,11 +3,17 @@ p8105_hw6_sd3730
 Stacey Dai
 2024-12-02
 
+# Problem 1
+
+Load necessary packages for problem 1.
+
 ``` r
 library(tidyverse)
 library(rnoaa)
 library(broom)
 ```
+
+Clean and prepare the noaa dataset for analysis.
 
 ``` r
 weather_df = 
@@ -25,8 +31,11 @@ weather_df =
   select(name, id, everything())
 ```
 
+Generate 5000 bootstrap samples and fit a simple linear regression for
+each sample.
+
 ``` r
-set.seed(123) # For reproducibility
+set.seed(123)
 
 bootstrap_results = 
   replicate(
@@ -44,4 +53,12 @@ bootstrap_results =
     simplify = FALSE
   ) |>
   bind_rows()
+```
+
+Identify the 2.5% and 97.5% quantiles to provide a 95% confidence
+interval.
+
+``` r
+ci_r2 = quantile(bootstrap_results$r2, probs = c(0.025, 0.975))
+ci_log_product = quantile(bootstrap_results$log_product, probs = c(0.025, 0.975))
 ```
