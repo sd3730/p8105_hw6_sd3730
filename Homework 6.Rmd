@@ -101,7 +101,7 @@ homicides_clean = homicides |>
 ```
 
 Model the binary outcome of solving homicides in Baltimore, MD.
-```{r baltimore, message = FALSE, warning = FALSE}
+```{r baltimore_analysis, echo = TRUE, message = FALSE, warning = FALSE}
 baltimore_df = homicides_clean |>
   filter(city_state == "Baltimore, MD")
 
@@ -116,4 +116,23 @@ baltimore_results = broom::tidy(baltimore_model, exponentiate = TRUE, conf.int =
 male_vs_female_or = baltimore_results |>
   filter(term == "victim_sexMale") |>
   select(estimate, conf.low, conf.high)
+
+print(baltimore_results)
+print(male_vs_female_or)
+```
+
+Next, fit a logistic regression for all cities.
+```{r allcities, message = FALSE, warning = FALSE}
+city_results = homicides_clean |>
+  nest(data = -city_state) |>
+  mutate(
+    model = map(data, ~ glm(solved_binary ~ victim_age + victim_sex + victim_race, 
+                            data = ., family = binomial())),
+    results = map(model, ~ broom::tidy(., exponentiate = TRUE, conf.int = TRUE))
+  ) |>
+  unnest(results) |>
+  filter(term == "victim_sexMale") |>
+  select(city_state, estimate, conf.low, conf.high)
+
+print(city_results)
 ```

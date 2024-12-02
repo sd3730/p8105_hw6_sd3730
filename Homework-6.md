@@ -128,4 +128,55 @@ baltimore_results = broom::tidy(baltimore_model, exponentiate = TRUE, conf.int =
 male_vs_female_or = baltimore_results |>
   filter(term == "victim_sexMale") |>
   select(estimate, conf.low, conf.high)
+
+print(baltimore_results)
 ```
+
+    ## # A tibble: 4 × 7
+    ##   term             estimate std.error statistic  p.value conf.low conf.high
+    ##   <chr>               <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
+    ## 1 (Intercept)         1.36    0.171        1.81 7.04e- 2    0.976     1.91 
+    ## 2 victim_age          0.993   0.00332     -2.02 4.30e- 2    0.987     1.00 
+    ## 3 victim_sexMale      0.426   0.138       -6.18 6.26e-10    0.324     0.558
+    ## 4 victim_raceWhite    2.32    0.175        4.82 1.45e- 6    1.65      3.28
+
+``` r
+print(male_vs_female_or)
+```
+
+    ## # A tibble: 1 × 3
+    ##   estimate conf.low conf.high
+    ##      <dbl>    <dbl>     <dbl>
+    ## 1    0.426    0.324     0.558
+
+Next, fit a logistic regression for all cities.
+
+``` r
+city_results = homicides_clean |>
+  nest(data = -city_state) |>
+  mutate(
+    model = map(data, ~ glm(solved_binary ~ victim_age + victim_sex + victim_race, 
+                            data = ., family = binomial())),
+    results = map(model, ~ broom::tidy(., exponentiate = TRUE, conf.int = TRUE))
+  ) |>
+  unnest(results) |>
+  filter(term == "victim_sexMale") |>
+  select(city_state, estimate, conf.low, conf.high)
+
+print(city_results)
+```
+
+    ## # A tibble: 47 × 4
+    ##    city_state      estimate conf.low conf.high
+    ##    <chr>              <dbl>    <dbl>     <dbl>
+    ##  1 Albuquerque, NM    1.77     0.825     3.76 
+    ##  2 Atlanta, GA        1.00     0.680     1.46 
+    ##  3 Baltimore, MD      0.426    0.324     0.558
+    ##  4 Baton Rouge, LA    0.381    0.204     0.684
+    ##  5 Birmingham, AL     0.870    0.571     1.31 
+    ##  6 Boston, MA         0.674    0.353     1.28 
+    ##  7 Buffalo, NY        0.521    0.288     0.936
+    ##  8 Charlotte, NC      0.884    0.551     1.39 
+    ##  9 Chicago, IL        0.410    0.336     0.501
+    ## 10 Cincinnati, OH     0.400    0.231     0.667
+    ## # ℹ 37 more rows
