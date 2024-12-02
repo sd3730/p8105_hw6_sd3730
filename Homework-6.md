@@ -62,3 +62,21 @@ interval.
 ci_r2 = quantile(bootstrap_results$r2, probs = c(0.025, 0.975))
 ci_log_product = quantile(bootstrap_results$log_product, probs = c(0.025, 0.975))
 ```
+
+Plot histograms for both quantiles.
+
+``` r
+bootstrap_results |>
+  pivot_longer(cols = everything(), names_to = "metric", values_to = "value") |>
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30, fill = "skyblue", color = "black", alpha = 0.7) +
+  facet_wrap(~metric, scales = "free", ncol = 1) +
+  theme_minimal() +
+  labs(
+    title = "Bootstrap Distributions",
+    x = "Estimated Value",
+    y = "Frequency"
+  )
+```
+
+![](Homework-6_files/figure-gfm/p1plot-1.png)<!-- -->
