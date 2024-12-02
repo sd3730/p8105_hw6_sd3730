@@ -180,3 +180,24 @@ print(city_results)
     ##  9 Chicago, IL        0.410    0.336     0.501
     ## 10 Cincinnati, OH     0.400    0.231     0.667
     ## # ℹ 37 more rows
+
+Create a plot with the estimated ORs and CIs for each city.
+
+``` r
+city_results_sorted = city_results |>
+  arrange(estimate) |>
+  mutate(city_state = fct_reorder(city_state, estimate))
+
+ggplot(city_results_sorted, aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  coord_flip() +
+  theme_minimal() +
+  labs(
+    title = "Adjusted Odds Ratios for Solving Homicides (Male vs Female Victims)",
+    x = "City",
+    y = "Adjusted Odds Ratio"
+  )
+```
+
+![](Homework-6_files/figure-gfm/p2plot-1.png)<!-- -->

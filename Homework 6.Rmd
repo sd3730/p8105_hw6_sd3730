@@ -136,3 +136,23 @@ city_results = homicides_clean |>
 
 print(city_results)
 ```
+
+Create a plot with the estimated ORs and CIs for each city.
+```{r p2plot, message = FALSE, warning = FALSE}
+city_results_sorted = city_results |>
+  arrange(estimate) |>
+  mutate(city_state = fct_reorder(city_state, estimate))
+
+ggplot(city_results_sorted, aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  coord_flip() +
+  theme_minimal() +
+  labs(
+    title = "Adjusted Odds Ratios for Solving Homicides (Male vs Female Victims)",
+    x = "City",
+    y = "Adjusted Odds Ratio"
+  )
+```
+
+
