@@ -1,0 +1,8 @@
+---
+title: "p8105_hw6_sd3730"
+author: "Stacey Dai"
+date: "2024-12-02"
+output: github_document
+---
+
+
