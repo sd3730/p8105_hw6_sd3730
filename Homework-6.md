@@ -1,17 +1,15 @@
----
-title: "p8105_hw6_sd3730"
-author: "Stacey Dai"
-date: "2024-12-02"
-output: github_document
----
+p8105_hw6_sd3730
+================
+Stacey Dai
+2024-12-02
 
-```{r setup, message = FALSE, warning = FALSE}
+``` r
 library(tidyverse)
 library(rnoaa)
 library(broom)
 ```
 
-```{r cleanup, message = FALSE, warning = FALSE}
+``` r
 weather_df = 
   rnoaa::meteo_pull_monitors(
     c("USW00094728"),
@@ -27,7 +25,7 @@ weather_df =
   select(name, id, everything())
 ```
 
-```{r bootstrap, message = FALSE, warning = FALSE}
+``` r
 set.seed(123) # For reproducibility
 
 bootstrap_results = 
@@ -47,4 +45,3 @@ bootstrap_results =
   ) |>
   bind_rows()
 ```
-
