@@ -84,3 +84,9 @@ bootstrap_results |>
 The distribution for the log_product graph appears to be symmetric andd
 approximately normal. The distribution for the r2 graphh is symmetrical
 and unimodal.
+
+# Problem 2
+
+``` r
+library(purrr)
+```

@@ -8,14 +8,14 @@ output: github_document
 # Problem 1
 
 Load necessary packages for problem 1.
-```{r setup, message = FALSE, warning = FALSE}
+```{r p1setup, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(rnoaa)
 library(broom)
 ```
 
 Clean and prepare the noaa dataset for analysis.
-```{r cleanup, message = FALSE, warning = FALSE}
+```{r p1cleanup, message = FALSE, warning = FALSE}
 weather_df = 
   rnoaa::meteo_pull_monitors(
     c("USW00094728"),
@@ -75,3 +75,9 @@ bootstrap_results |>
 ```
 
 The distribution for the log_product graph appears to be symmetric andd approximately normal. The distribution for the r2 graphh is symmetrical and unimodal. 
+
+# Problem 2
+
+```{r p2setup, message = FALSE, warning = FALSE}
+library(purrr)
+```
