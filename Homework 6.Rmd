@@ -73,3 +73,5 @@ bootstrap_results |>
     y = "Frequency"
   )
 ```
+
+The distribution for the log_product graph appears to be symmetric andd approximately normal. The distribution for the r2 graphh is symmetrical and unimodal. 

@@ -80,3 +80,7 @@ bootstrap_results |>
 ```
 
 ![](Homework-6_files/figure-gfm/p1plot-1.png)<!-- -->
+
+The distribution for the log_product graph appears to be symmetric andd
+approximately normal. The distribution for the r2 graphh is symmetrical
+and unimodal.
