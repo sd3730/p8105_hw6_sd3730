@@ -78,6 +78,24 @@ The distribution for the log_product graph appears to be symmetric andd approxim
 
 # Problem 2
 
+Load necessary packages for problem 2.
 ```{r p2setup, message = FALSE, warning = FALSE}
 library(purrr)
+```
+
+Prepare and clean data for analysis.
+```{r p2cleanup, message = FALSE, warning = FALSE}
+homicides = read_csv("https://raw.githubusercontent.com/washingtonpost/data-homicides/master/homicide-data.csv")
+
+homicides_clean = homicides |>
+  mutate(
+    city_state = str_c(city, ", ", state),
+    solved_binary = if_else(disposition == "Closed by arrest", 1, 0),
+    victim_age = suppressWarnings(as.numeric(victim_age))
+  ) |>
+  filter(
+    !is.na(victim_age),
+    !(city_state %in% c("Dallas, TX", "Phoenix, AZ", "Kansas City, MO", "Tulsa, AL")),
+    victim_race %in% c("White", "Black")
+  )
 ```
