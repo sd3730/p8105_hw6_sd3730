@@ -110,3 +110,22 @@ homicides_clean = homicides |>
     victim_race %in% c("White", "Black")
   )
 ```
+
+Model the binary outcome of solving homicides in Baltimore, MD.
+
+``` r
+baltimore_df = homicides_clean |>
+  filter(city_state == "Baltimore, MD")
+
+baltimore_model = glm(
+  solved_binary ~ victim_age + victim_sex + victim_race,
+  data = baltimore_df,
+  family = binomial()
+)
+
+baltimore_results = broom::tidy(baltimore_model, exponentiate = TRUE, conf.int = TRUE)
+
+male_vs_female_or = baltimore_results |>
+  filter(term == "victim_sexMale") |>
+  select(estimate, conf.low, conf.high)
+```
