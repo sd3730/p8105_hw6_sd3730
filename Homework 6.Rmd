@@ -5,4 +5,9 @@ date: "2024-12-02"
 output: github_document
 ---
 
+```{r setup, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(rnoaa)
+library(broom)
+```
 
