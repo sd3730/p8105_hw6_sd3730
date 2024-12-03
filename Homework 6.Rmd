@@ -174,3 +174,14 @@ birthweight_data = birthweight_data |>
   )|>
   drop_na(bwt, blength, gaweeks)
 ```
+
+Next, propose and fit a regression model for birthweight.
+```{r birthweight, message = FALSE, warning = FALSE}
+birthweight_model <- lm(
+  bwt ~ gaweeks + blength + babysex + ppwt + wtgain + smoken,
+  data = birthweight_data
+)
+
+summary(birthweight_model)
+```
+Birthweight is hypothesized to be influenced by gestational agge, baby's length, mother's health, and socioeconomic factors. 

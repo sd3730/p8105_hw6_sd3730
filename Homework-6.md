@@ -229,3 +229,42 @@ birthweight_data = birthweight_data |>
   )|>
   drop_na(bwt, blength, gaweeks)
 ```
+
+Next, propose and fit a regression model for birthweight.
+
+``` r
+birthweight_model <- lm(
+  bwt ~ gaweeks + blength + babysex + ppwt + wtgain + smoken,
+  data = birthweight_data
+)
+
+summary(birthweight_model)
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = bwt ~ gaweeks + blength + babysex + ppwt + wtgain + 
+    ##     smoken, data = birthweight_data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -1630.6  -211.6    -8.6   202.8  3975.0 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept) -4332.2359    98.7093 -43.889  < 2e-16 ***
+    ## gaweeks        26.1370     1.6948  15.422  < 2e-16 ***
+    ## blength       121.6967     2.0171  60.333  < 2e-16 ***
+    ## babysex2      -20.0691     9.9878  -2.009   0.0446 *  
+    ## ppwt            2.2202     0.2501   8.877  < 2e-16 ***
+    ## wtgain          4.9992     0.4657  10.736  < 2e-16 ***
+    ## smoken         -3.1678     0.6730  -4.707 2.59e-06 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 326.1 on 4335 degrees of freedom
+    ## Multiple R-squared:  0.595,  Adjusted R-squared:  0.5945 
+    ## F-statistic:  1062 on 6 and 4335 DF,  p-value: < 2.2e-16
+
+Birthweight is hypothesized to be influenced by gestational agge, baby’s
+length, mother’s health, and socioeconomic factors.
