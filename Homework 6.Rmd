@@ -203,3 +203,16 @@ ggplot(birthweight_data, aes(x = pred, y = resid)) +
     title = "Residuals vs. Fitted Values"
   )
 ```
+
+Compare the model to one using length at birth and gestational age as predictors.
+```{r alt_model1, message = FALSE, warning = FALSE}
+alt_model1 = lm(bwt ~ blength + gaweeks, data = birthweight_data)
+```
+
+Next, compare the model to one using head circumference, length, sex, and all interactions.
+```{r alt_model2, message = FALSE, warning = FALSE}
+alt_model2 = lm(
+  bwt ~ bhead * blength * babysex,
+  data = birthweight_data
+)
+```

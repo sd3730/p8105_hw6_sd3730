@@ -289,3 +289,20 @@ ggplot(birthweight_data, aes(x = pred, y = resid)) +
 ```
 
 ![](Homework-6_files/figure-gfm/bwt_pred-1.png)<!-- -->
+
+Compare the model to one using length at birth and gestational age as
+predictors.
+
+``` r
+alt_model1 = lm(bwt ~ blength + gaweeks, data = birthweight_data)
+```
+
+Next, compare the model to one using head circumference, length, sex,
+and all interactions.
+
+``` r
+alt_model2 = lm(
+  bwt ~ bhead * blength * babysex,
+  data = birthweight_data
+)
+```
