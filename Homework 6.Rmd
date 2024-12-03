@@ -161,7 +161,7 @@ A lot of the cities have large confidence intervals, which implies that there is
 
 # Problem 3
 
-First, load and cleanthe neceessary data for problem 3.
+First, load and clean the necessary data for problem 3.
 ```{r p3setup, message = FALSE, warning = FALSE}
 birthweight_data = read.csv("./datafiles/birthweight.csv")
 
@@ -184,9 +184,9 @@ birthweight_model <- lm(
 
 summary(birthweight_model)
 ```
-Birthweight is hypothesized to be influenced by gestational agge, baby's length, mother's health, and socioeconomic factors. 
+The goal of the modeling process is to create a regression model that explains and predicts a baby's birthweight based on available variables. Birthweight is hypothesized to be influenced by gestational age, baby's length, mother's health, and socioeconomic factors. 
 
-Visualize the residuals vs. fitted values.
+Visualize the residuals vs. fitted values to check for patterns. 
 ```{r bwt_pred, message = FALSE, warning = FALSE}
 library(modelr)
 
@@ -203,13 +203,14 @@ ggplot(birthweight_data, aes(x = pred, y = resid)) +
     title = "Residuals vs. Fitted Values"
   )
 ```
+The residuals vs. fitted values plot appears to show clustered residuals and does not appear to follow a linear pattern. This may indicate that the assumptions of the linear regression model is not satisfied.
 
-Compare the model to one using length at birth and gestational age as predictors.
+Compare the model to one using length at birth and gestational age as predictors. This model aims to test how well these two key predictors explain birthweight without considering other factors.
 ```{r alt_model1, message = FALSE, warning = FALSE}
 alt_model1 = lm(bwt ~ blength + gaweeks, data = birthweight_data)
 ```
 
-Next, compare the model to one using head circumference, length, sex, and all interactions.
+Next, compare the model to one using head circumference, length, sex, and all interactions. This complex model examines whether the interactions provide additional explanatory power.
 ```{r alt_model2, message = FALSE, warning = FALSE}
 alt_model2 = lm(
   bwt ~ bhead * blength * babysex,
@@ -217,7 +218,7 @@ alt_model2 = lm(
 )
 ```
 
-Evaluate models using cross-validation.
+Evaluate models using cross-validation. 
 ```{r crossv, message = FALSE, warning = FALSE}
 library(purrr)
 library(modelr)

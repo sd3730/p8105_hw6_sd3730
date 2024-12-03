@@ -215,7 +215,7 @@ solving rates between male and female victims.
 
 # Problem 3
 
-First, load and cleanthe neceessary data for problem 3.
+First, load and clean the necessary data for problem 3.
 
 ``` r
 birthweight_data = read.csv("./datafiles/birthweight.csv")
@@ -266,10 +266,12 @@ summary(birthweight_model)
     ## Multiple R-squared:  0.595,  Adjusted R-squared:  0.5945 
     ## F-statistic:  1062 on 6 and 4335 DF,  p-value: < 2.2e-16
 
-Birthweight is hypothesized to be influenced by gestational agge, baby’s
+The goal of the modeling process is to create a regression model that
+explains and predicts a baby’s birthweight based on available variables.
+Birthweight is hypothesized to be influenced by gestational age, baby’s
 length, mother’s health, and socioeconomic factors.
 
-Visualize the residuals vs. fitted values.
+Visualize the residuals vs. fitted values to check for patterns.
 
 ``` r
 library(modelr)
@@ -288,17 +290,22 @@ ggplot(birthweight_data, aes(x = pred, y = resid)) +
   )
 ```
 
-![](Homework-6_files/figure-gfm/bwt_pred-1.png)<!-- -->
+![](Homework-6_files/figure-gfm/bwt_pred-1.png)<!-- --> The residuals
+vs. fitted values plot appears to show clustered residuals and does not
+appear to follow a linear pattern. This may indicate that the
+assumptions of the linear regression model is not satisfied.
 
 Compare the model to one using length at birth and gestational age as
-predictors.
+predictors. This model aims to test how well these two key predictors
+explain birthweight without considering other factors.
 
 ``` r
 alt_model1 = lm(bwt ~ blength + gaweeks, data = birthweight_data)
 ```
 
 Next, compare the model to one using head circumference, length, sex,
-and all interactions.
+and all interactions. This complex model examines whether the
+interactions provide additional explanatory power.
 
 ``` r
 alt_model2 = lm(
