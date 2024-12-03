@@ -306,3 +306,25 @@ alt_model2 = lm(
   data = birthweight_data
 )
 ```
+
+Evaluate models using cross-validation.
+
+``` r
+library(purrr)
+library(modelr)
+
+cv_splits = crossv_mc(birthweight_data, n = 100)
+
+model_rmse = function(model_formula, splits) {
+  splits |>
+    mutate(
+      model = map(train, ~ lm(model_formula, data = .x)),
+      rmse = map2_dbl(model, test, ~ rmse(.x, .y))
+    ) |>
+    summarise(mean_rmse = mean(rmse))
+}
+
+model1_rmse = model_rmse(bwt ~ gaweeks + blength + babysex + ppwt + wtgain + smoken, cv_splits)
+alt1_rmse = model_rmse(bwt ~ gaweeks + blength, cv_splits)
+alt2_rmse = model_rmse(bwt ~ bhead * blength * babysex, cv_splits)
+```
