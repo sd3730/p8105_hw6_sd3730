@@ -201,3 +201,14 @@ ggplot(city_results_sorted, aes(x = city_state, y = estimate)) +
 ```
 
 ![](Homework-6_files/figure-gfm/p2plot-1.png)<!-- -->
+
+Based on the plot, cities like Albuquerque, NM, Stockton, CA and Fresno,
+CA have the highest estimated ORs with wide confidence intervals,
+suggesting more likelihood of solving male victim cases. Cities like New
+York, NY and Baton Rouge, LA have ORs less than 1, which indicate a
+higher likelihood of solving homicides involving female victims.
+
+A lot of the cities have large confidence intervals, which implies that
+there is uncertainty in the OR estimates. Overall, most cities have ORs
+around 1, suggesting that there is little to moderate variation in
+solving rates between male and female victims.
