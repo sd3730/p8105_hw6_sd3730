@@ -268,3 +268,24 @@ summary(birthweight_model)
 
 Birthweight is hypothesized to be influenced by gestational agge, baby’s
 length, mother’s health, and socioeconomic factors.
+
+Visualize the residuals vs. fitted values.
+
+``` r
+library(modelr)
+
+birthweight_data = birthweight_data |>
+  add_predictions(birthweight_model) |>
+  add_residuals(birthweight_model)
+
+ggplot(birthweight_data, aes(x = pred, y = resid)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "loess", se = FALSE, color = "red") +
+  labs(
+    x = "Fitted Values",
+    y = "Residuals",
+    title = "Residuals vs. Fitted Values"
+  )
+```
+
+![](Homework-6_files/figure-gfm/bwt_pred-1.png)<!-- -->
