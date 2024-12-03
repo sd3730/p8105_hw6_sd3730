@@ -212,3 +212,20 @@ A lot of the cities have large confidence intervals, which implies that
 there is uncertainty in the OR estimates. Overall, most cities have ORs
 around 1, suggesting that there is little to moderate variation in
 solving rates between male and female victims.
+
+# Problem 3
+
+First, load and cleanthe neceessary data for problem 3.
+
+``` r
+birthweight_data = read.csv("./datafiles/birthweight.csv")
+
+birthweight_data = birthweight_data |>
+  mutate(
+    babysex = as.factor(babysex),
+    malform = as.factor(malform),
+    frace = as.factor(frace),
+    mrace = as.factor(mrace)
+  )|>
+  drop_na(bwt, blength, gaweeks)
+```
